@@ -1,4 +1,4 @@
-name: CI/CD
+name: CI Unidad 5
 
 on:
   push:
@@ -6,21 +6,48 @@ on:
   pull_request:
 
 jobs:
-  lint:
+  laboratorio:
+    name: Laboratorio (CI Business Logic)
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: 01_LABORATORIO_U5/laboratorio_U5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install -r requirements.txt
+      - run: ruff check src tests
+      - run: pytest -v --cov=src --cov-report=term-missing --cov-report=html --cov-fail-under=80
+      - run: python -m compileall -q src
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: cobertura-laboratorio
+          path: 01_LABORATORIO_U5/laboratorio_U5/htmlcov/
+
+  vetcare-lint:
+    name: VetCare 24 · lint
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: 02_PIA_VETCARE24
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-          cache: pip
-          cache-dependency-path: requirements-dev.txt
       - run: pip install -r requirements-dev.txt
       - run: ruff check .
 
-  test:
+  vetcare-test:
+    name: VetCare 24 · pruebas
     runs-on: ubuntu-latest
-    needs: lint
+    needs: vetcare-lint
+    defaults:
+      run:
+        working-directory: 02_PIA_VETCARE24
     services:
       postgres:
         image: postgres:16
@@ -39,44 +66,34 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-          cache: pip
-          cache-dependency-path: requirements-dev.txt
       - run: pip install -r requirements-dev.txt
       - run: pytest   # falla si la cobertura baja de 80 %
-      - name: Generar evidencia del PIA (120 casos, 20 transiciones, CU-05 y OpenAPI)
+      - name: Generar evidencia (120 casos, 20 transiciones, CU-05 y OpenAPI)
         env:
           PYTHONPATH: src
         run: |
           python -m tests.evidencia_api docs/evidencia
-          python -m tests.evidencia_emergencias docs/evidencia   # falla si algo no coincide
+          python -m tests.evidencia_emergencias docs/evidencia
           python -m vetcare24.api.exportar_openapi docs/evidencia/openapi.json
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: cobertura
-          path: coverage.xml
+          name: cobertura-vetcare24
+          path: 02_PIA_VETCARE24/coverage.xml
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: evidencia
-          path: docs/evidencia/
+          name: evidencia-vetcare24
+          path: 02_PIA_VETCARE24/docs/evidencia/
 
-  docker:
+  vetcare-docker:
+    name: VetCare 24 · Docker
     runs-on: ubuntu-latest
-    needs: test
-    permissions:
-      contents: read
-      packages: write
+    needs: vetcare-test
+    defaults:
+      run:
+        working-directory: 02_PIA_VETCARE24
     steps:
       - uses: actions/checkout@v4
-      - name: Validar docker-compose
-        run: docker compose --profile tests config -q
-      - name: Construir imagen de la aplicación
-        run: docker build --target runtime -t vetcare24:ci .
-      - name: Publicar en GHCR (solo en main)
-        if: github.ref == 'refs/heads/main'
-        run: |
-          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
-          IMG=ghcr.io/${GITHUB_REPOSITORY,,}:${GITHUB_SHA::7}
-          docker tag vetcare24:ci "$IMG"
-          docker push "$IMG"
+      - run: docker compose --profile tests config -q
+      - run: docker build --target runtime -t vetcare24:ci .

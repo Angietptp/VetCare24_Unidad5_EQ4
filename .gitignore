@@ -1,9 +1,21 @@
+# Entornos y secretos
+.venv/
+venv/
+.env
+*.pem
+*token*
+# Python
 __pycache__/
 *.pyc
-.venv/
-.env
+.pytest_cache/
+.ruff_cache/
+# Cobertura generada (se regenera con pytest-cov)
 .coverage
 coverage.xml
 htmlcov/
-.pytest_cache/
-.ruff_cache/
+# Sistema
+.DS_Store
+Thumbs.db
+
+# La cobertura entregada se conserva
+!Reporte_Cobertura/**

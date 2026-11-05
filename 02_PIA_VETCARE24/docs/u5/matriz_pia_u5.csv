@@ -1,0 +1,12 @@
+id,regla,entrada,resultado_esperado,tipo,origen,prueba
+CP-01,Capacidad suficiente al confirmar una cita,cantidad=3;capacidad=10,cumple,Éxito,NB-08 / D-12,test_u5_matriz.py::test_caso_de_la_matriz
+CP-02,Capacidad suficiente al confirmar una cita,cantidad=11;capacidad=10,CAPACIDAD_INSUFICIENTE:S1,Error,NB-08 / D-12,test_u5_matriz.py::test_caso_de_la_matriz
+CP-03,Capacidad suficiente al confirmar una cita,cantidad=10;capacidad=10,cumple,Límite,NB-08 / D-12,test_u5_matriz.py::test_caso_de_la_matriz
+CP-04,Total mínimo para el beneficio ($1500),precio=500;cantidad=4,cumple,Éxito,D-05,test_u5_matriz.py::test_caso_de_la_matriz
+CP-05,Total mínimo para el beneficio ($1500),precio=500;cantidad=2,TOTAL_INSUFICIENTE,Error,D-05,test_u5_matriz.py::test_caso_de_la_matriz
+CP-06,Total mínimo para el beneficio ($1500),precio=500;cantidad=3,cumple,Límite,D-05,test_u5_matriz.py::test_caso_de_la_matriz
+CP-07,Registro de emergencia sin cita (CU-05),motivo=Atropellamiento;mascota=M1,IDENTIFICADA,Éxito,NB-19 / R-06,test_u5_matriz.py::test_caso_de_la_matriz
+CP-08,Registro de emergencia sin cita (CU-05),motivo=   ;mascota=,MOTIVO_VACIO,Error,NB-19 / N-04,test_u5_matriz.py::test_caso_de_la_matriz
+CP-09,Registro de emergencia sin cita (CU-05),motivo=X;mascota=,IDENTIFICADA,Límite,NB-19 / P3,test_u5_matriz.py::test_caso_de_la_matriz
+CP-10,Persistencia: rollback descarta y commit conserva,insertar propietario y deshacer / confirmar,rollback deja 0 filas; commit conserva 1,Integración (BD),D-14,test_base_de_datos.py::test_rollback_deshace_y_commit_conserva
+CP-11,Servicio externo: si el aviso falla se conserva el registro,notificador simulado que falla,notificacion PENDIENTE y emergencia IDENTIFICADA,Integración (simulado),NB-19 / CR-8,test_servicios_emergencias.py::test_si_la_notificacion_falla_el_registro_se_conserva

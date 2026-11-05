@@ -1,0 +1,21 @@
+﻿ID,Prueba pytest,Entrada,Resultado esperado,Tipo,Regla
+C-01,test_order.py::test_vip_discount,"Order(100, vip=True).confirm()",85; status CONFIRMED,Éxito,RN-03
+C-02,test_order.py::test_regular_no_discount,Order(100).confirm(),100,Éxito,RN-04
+C-03,test_order.py::test_customer_debt,Order(100).confirm(customer_debt=50),CustomerHasDebt,Error,RN-02
+C-04,test_order.py::test_invalid_total[0],Order(0).confirm(),ValueError,Límite,RN-01
+C-05,test_order.py::test_invalid_total[-1],Order(-1).confirm(),ValueError,Error,RN-01
+C-06,test_order.py::test_vip_discount_200,"Order(200, vip=True).confirm()",170; discount 30; CONFIRMED,Éxito,RN-03
+C-07,test_order.py::test_regular_customer_200_no_discount,Order(200).confirm(),200; discount 0; CONFIRMED,Éxito,RN-04
+C-08,test_order.py::test_cannot_confirm_twice,confirm() dos veces seguidas,"ValueError(""already confirmed"")",Error,RN-05
+C-09,test_repository.py::test_repository_commit,"save(1, Order(120)) + commit",total == 120,Integración,RN-09
+C-10,test_repository.py::test_repository_rollback,"save(1, Order(120)) + rollback",consulta → None,Integración,RN-10
+C-11,test_repository.py::test_repository_commit_order_250,Order(250).confirm(); save(2) + commit,id 2; total 250; CONFIRMED,Integración,RN-09
+C-12,test_service.py::test_gateway_approved,Mock charge → True; checkout(Order(100)),100; charge(100) una vez,Éxito,RN-06
+C-13,test_service.py::test_gateway_rejected,Mock charge → False,RuntimeError,Error,RN-07
+C-14,test_service.py::test_gateway_rejected_vip_200,"Mock charge → False; Order(200, vip=True)","RuntimeError(""payment rejected""); charge(170)",Error,"RN-07, RN-08"
+C-15,test_security.py::test_owner_within_24h,NEW; propietario; 1 h,Permitido (True),Éxito,RN-13
+C-16,test_security.py::test_stranger_denied,NEW; otro usuario; no admin,Denegado (False),Error,RN-14
+C-17,test_security.py::test_shipped_denied_even_admin,SHIPPED; admin,Denegado (False),Error,RN-11
+C-18,test_security.py::test_expired_denied,NEW; propietario; 25 h,Denegado (False),Error,RN-13
+C-19,test_security.py::test_admin_cancels_new_order_of_another_user,NEW; admin; otro usuario; 48 h,Permitido (True),Éxito,RN-12
+C-20,test_security.py::test_owner_exactly_24h_denied,NEW; propietario; 24 h exactas,Denegado (False),Límite,RN-13
