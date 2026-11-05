@@ -1,0 +1,45 @@
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-vetcare}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-vetcare_dev}
+      POSTGRES_DB: ${POSTGRES_DB:-vetcare24}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./docker/initdb:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  app:
+    build:
+      context: .
+      target: runtime
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER:-vetcare}:${POSTGRES_PASSWORD:-vetcare_dev}@db:5432/${POSTGRES_DB:-vetcare24}
+      DATA_DIR: /app/data/alumno
+    ports:
+      - "${APP_PORT:-8000}:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+
+  tests:
+    build:
+      context: .
+      target: dev
+    profiles: ["tests"]
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER:-vetcare}:${POSTGRES_PASSWORD:-vetcare_dev}@db:5432/vetcare24_test
+      DATA_DIR: /app/data/alumno
+    volumes:
+      - ./docs/evidencia:/app/docs/evidencia
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  pgdata:

@@ -1,0 +1,21 @@
+﻿escenario,descripcion,rol,metodo,ruta,http_esperado,http_obtenido,resultado_esperado,resultado_obtenido,regla,coincide
+E01,"Recepción registra una emergencia de M1, que NO tiene cita",recepcion,POST,/emergencias,201,201,IDENTIFICADA · protocolo · notificado,IDENTIFICADA · protocolo · notificado,"NB-19, R-06, A-01",True
+E02,Recepción registra una emergencia sin mascota registrada,recepcion,POST,/emergencias,201,201,IDENTIFICADA · protocolo · notificado,IDENTIFICADA · protocolo · notificado,P3,True
+E03,El veterinario no registra emergencias,veterinario,POST,/emergencias,403,403,ACCESO_DENEGADO,ACCESO_DENEGADO,"A-01, N-07",True
+E04,El personal clínico no registra emergencias,personal_clinico,POST,/emergencias,403,403,ACCESO_DENEGADO,ACCESO_DENEGADO,"A-01, N-07",True
+E05,Sin encabezado X-Rol,(sin rol),POST,/emergencias,401,401,ROL_REQUERIDO,ROL_REQUERIDO,K-02,True
+E06,Mascota indicada que no existe,recepcion,POST,/emergencias,404,404,NO_ENCONTRADO,NO_ENCONTRADO,D-13,True
+E07,Motivo en blanco,recepcion,POST,/emergencias,422,422,MOTIVO_VACIO,MOTIVO_VACIO,N-04,True
+E08,Falta el campo motivo,recepcion,POST,/emergencias,400,400,SOLICITUD_INVALIDA,SOLICITUD_INVALIDA,K-03,True
+E09,Identificador repetido,recepcion,POST,/emergencias,409,409,YA_EXISTE,YA_EXISTE,K-03,True
+E10,El veterinario recibió los dos avisos,veterinario,GET,/avisos-veterinario,200,200,2 aviso(s),2 aviso(s),"NB-19, CR-8, N-08",True
+E11,M1 puede recibir atención sin cita (es emergencia),veterinario,GET,/mascotas/M1/evaluaciones/atencion,200,200,cumple,cumple,"R-06, N-09",True
+E12,M2 no tiene cita confirmada ni emergencia,veterinario,GET,/mascotas/M2/evaluaciones/atencion,200,200,no cumple: SIN_CITA_CONFIRMADA|SIN_EMERGENCIA_ACTIVA,no cumple: SIN_CITA_CONFIRMADA|SIN_EMERGENCIA_ACTIVA,"R-06, N-09",True
+E13,Recepción no inicia la atención,recepcion,POST,/emergencias/EMER-E01/iniciar-atencion,403,403,ACCESO_DENEGADO,ACCESO_DENEGADO,"A-01, N-07",True
+E14,El personal clínico inicia la atención,personal_clinico,POST,/emergencias/EMER-E01/iniciar-atencion,200,200,EN_ATENCION,EN_ATENCION,"US20, N-02",True
+E15,Iniciar otra vez la misma atención,personal_clinico,POST,/emergencias/EMER-E01/iniciar-atencion,409,409,TRANSICION_INVALIDA,TRANSICION_INVALIDA,"N-02, D-12",True
+E16,Iniciar la atención de una que no existe,personal_clinico,POST,/emergencias/EMER-NO/iniciar-atencion,404,404,NO_ENCONTRADO,NO_ENCONTRADO,D-13,True
+E17,El responsable consulta la emergencia,responsable,GET,/emergencias/EMER-E01,200,200,EN_ATENCION,EN_ATENCION,N-07,True
+E18,Listar las que esperan atención,personal_clinico,GET,/emergencias?estado=IDENTIFICADA,200,200,1 resultado(s),1 resultado(s),N-02,True
+E19,Filtro con un estado que no existe,personal_clinico,GET,/emergencias?estado=CERRADA,400,400,SOLICITUD_INVALIDA,SOLICITUD_INVALIDA,K-03,True
+E20,Los eventos EmergenciaIdentificada quedaron guardados,veterinario,GET,/eventos,200,200,2 EmergenciaIdentificada,2 EmergenciaIdentificada,"D-14, N-06",True

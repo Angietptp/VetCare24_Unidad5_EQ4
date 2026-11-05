@@ -1,0 +1,21 @@
+﻿caso_id,operacion_id,accion_sugerida,estado_inicial,resultado_alumno,instrucciones
+VET-S001,VET-O001,completar,SOLICITADA,PENDIENTE,Ejecutar la operacion y registrar evento o excepcion
+VET-S002,VET-O002,cancelar,SOLICITADA,PENDIENTE,Ejecutar la operacion y registrar evento o excepcion
+VET-S003,VET-O003,repetir_aprobacion,SOLICITADA,PENDIENTE,Ejecutar la operacion y registrar evento o excepcion
+VET-S004,VET-O004,saltar_estado,SOLICITADA,PENDIENTE,Ejecutar la operacion y registrar evento o excepcion
+VET-S005,VET-O005,aprobar,SOLICITADA,PENDIENTE,Ejecutar la operacion y registrar evento o excepcion
+VET-S006,VET-O006,completar,SOLICITADA,PENDIENTE,Ejecutar la operacion y registrar evento o excepcion
+VET-S007,VET-O007,cancelar,SOLICITADA,PENDIENTE,Ejecutar la operacion y registrar evento o excepcion
+VET-S008,VET-O008,repetir_aprobacion,SOLICITADA,PENDIENTE,Ejecutar la operacion y registrar evento o excepcion
+VET-S009,VET-O009,saltar_estado,SOLICITADA,PENDIENTE,Ejecutar la operacion y registrar evento o excepcion
+VET-S010,VET-O010,aprobar,SOLICITADA,PENDIENTE,Ejecutar la operacion y registrar evento o excepcion
+VET-S011,VET-O011,completar,SOLICITADA,PENDIENTE,Ejecutar la operacion y registrar evento o excepcion
+VET-S012,VET-O012,cancelar,SOLICITADA,PENDIENTE,Ejecutar la operacion y registrar evento o excepcion
+VET-S013,VET-O013,repetir_aprobacion,SOLICITADA,PENDIENTE,Ejecutar la operacion y registrar evento o excepcion
+VET-S014,VET-O014,saltar_estado,SOLICITADA,PENDIENTE,Ejecutar la operacion y registrar evento o excepcion
+VET-S015,VET-O015,aprobar,SOLICITADA,PENDIENTE,Ejecutar la operacion y registrar evento o excepcion
+VET-S016,VET-O016,completar,SOLICITADA,PENDIENTE,Ejecutar la operacion y registrar evento o excepcion
+VET-S017,VET-O017,cancelar,SOLICITADA,PENDIENTE,Ejecutar la operacion y registrar evento o excepcion
+VET-S018,VET-O018,repetir_aprobacion,SOLICITADA,PENDIENTE,Ejecutar la operacion y registrar evento o excepcion
+VET-S019,VET-O019,saltar_estado,SOLICITADA,PENDIENTE,Ejecutar la operacion y registrar evento o excepcion
+VET-S020,VET-O020,aprobar,SOLICITADA,PENDIENTE,Ejecutar la operacion y registrar evento o excepcion

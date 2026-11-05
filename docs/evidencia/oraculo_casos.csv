@@ -1,0 +1,121 @@
+﻿caso_id,operacion_id,tipo_prueba,regla_a_verificar,resultado_esperado,total_mxn,condiciones_fallidas
+VET-T001,VET-O001,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,CUMPLE,7587.00,
+VET-B001,VET-O001,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,NO_CUMPLE,7587.00,vip
+VET-T002,VET-O002,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,CUMPLE,6593.00,
+VET-B002,VET-O002,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,NO_CUMPLE,6593.00,vip
+VET-T003,VET-O003,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,CUMPLE,1307.00,
+VET-B003,VET-O003,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,NO_CUMPLE,1307.00,vip | total >=1500
+VET-T004,VET-O004,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,CUMPLE,4405.00,
+VET-B004,VET-O004,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,NO_CUMPLE,4405.00,vip
+VET-T005,VET-O005,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,CUMPLE,4634.00,
+VET-B005,VET-O005,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,CUMPLE,4634.00,
+VET-T006,VET-O006,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,NO_CUMPLE,2104.00,cliente activo
+VET-B006,VET-O006,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,NO_CUMPLE,2104.00,vip
+VET-T007,VET-O007,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,NO_CUMPLE,2927.00,cliente activo
+VET-B007,VET-O007,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,NO_CUMPLE,2927.00,vip
+VET-T008,VET-O008,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,NO_CUMPLE,12473.00,cliente activo | autorizacion
+VET-B008,VET-O008,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,NO_CUMPLE,12473.00,vip
+VET-T009,VET-O009,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,NO_CUMPLE,3495.00,cliente activo
+VET-B009,VET-O009,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,NO_CUMPLE,3495.00,vip | not promocion
+VET-T010,VET-O010,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,NO_CUMPLE,5825.00,cliente activo
+VET-B010,VET-O010,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,CUMPLE,5825.00,
+VET-T011,VET-O011,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,CUMPLE,5286.00,
+VET-B011,VET-O011,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,NO_CUMPLE,5286.00,vip
+VET-T012,VET-O012,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,CUMPLE,768.00,
+VET-B012,VET-O012,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,NO_CUMPLE,768.00,vip | total >=1500
+VET-T013,VET-O013,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,NO_CUMPLE,0.00,detalle no vacio
+VET-B013,VET-O013,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,NO_CUMPLE,0.00,vip | total >=1500
+VET-T014,VET-O014,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,CUMPLE,7445.00,
+VET-B014,VET-O014,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,NO_CUMPLE,7445.00,vip
+VET-T015,VET-O015,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,CUMPLE,1023.00,
+VET-B015,VET-O015,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,NO_CUMPLE,1023.00,total >=1500
+VET-T016,VET-O016,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,NO_CUMPLE,7245.00,autorizacion
+VET-B016,VET-O016,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,NO_CUMPLE,7245.00,vip
+VET-T017,VET-O017,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,CUMPLE,6622.00,
+VET-B017,VET-O017,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,NO_CUMPLE,6622.00,vip
+VET-T018,VET-O018,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,CUMPLE,6648.00,
+VET-B018,VET-O018,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,NO_CUMPLE,6648.00,vip | not promocion
+VET-T019,VET-O019,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,CUMPLE,2075.00,
+VET-B019,VET-O019,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,NO_CUMPLE,2075.00,vip
+VET-T020,VET-O020,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,CUMPLE,9917.00,
+VET-B020,VET-O020,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,CUMPLE,9917.00,
+VET-T021,VET-O021,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,CUMPLE,2643.00,
+VET-B021,VET-O021,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,NO_CUMPLE,2643.00,vip
+VET-T022,VET-O022,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,CUMPLE,5825.00,
+VET-B022,VET-O022,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,NO_CUMPLE,5825.00,vip
+VET-T023,VET-O023,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,CUMPLE,6422.00,
+VET-B023,VET-O023,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,NO_CUMPLE,6422.00,vip
+VET-T024,VET-O024,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,NO_CUMPLE,3040.00,autorizacion
+VET-B024,VET-O024,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,NO_CUMPLE,3040.00,vip
+VET-T025,VET-O025,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,CUMPLE,3611.00,
+VET-B025,VET-O025,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,CUMPLE,3611.00,
+VET-T026,VET-O026,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,CUMPLE,5457.00,
+VET-B026,VET-O026,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,NO_CUMPLE,5457.00,vip
+VET-T027,VET-O027,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,CUMPLE,739.00,
+VET-B027,VET-O027,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,NO_CUMPLE,739.00,vip | total >=1500 | not promocion
+VET-T028,VET-O028,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,CUMPLE,5825.00,
+VET-B028,VET-O028,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,NO_CUMPLE,5825.00,vip
+VET-T029,VET-O029,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,CUMPLE,10030.00,
+VET-B029,VET-O029,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,NO_CUMPLE,10030.00,vip
+VET-T030,VET-O030,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,CUMPLE,5512.00,
+VET-B030,VET-O030,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,CUMPLE,5512.00,
+VET-T031,VET-O031,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,CUMPLE,2643.00,
+VET-B031,VET-O031,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,NO_CUMPLE,2643.00,vip
+VET-T032,VET-O032,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,NO_CUMPLE,7361.00,autorizacion
+VET-B032,VET-O032,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,NO_CUMPLE,7361.00,vip
+VET-T033,VET-O033,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,CUMPLE,1791.00,
+VET-B033,VET-O033,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,NO_CUMPLE,1791.00,vip
+VET-T034,VET-O034,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,CUMPLE,4405.00,
+VET-B034,VET-O034,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,NO_CUMPLE,4405.00,vip
+VET-T035,VET-O035,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,CUMPLE,4718.00,
+VET-B035,VET-O035,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,CUMPLE,4718.00,
+VET-T036,VET-O036,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,CUMPLE,2472.00,
+VET-B036,VET-O036,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,NO_CUMPLE,2472.00,vip | not promocion
+VET-T037,VET-O037,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,CUMPLE,5883.00,
+VET-B037,VET-O037,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,NO_CUMPLE,5883.00,vip
+VET-T038,VET-O038,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,CUMPLE,9149.00,
+VET-B038,VET-O038,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,NO_CUMPLE,9149.00,vip
+VET-T039,VET-O039,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,NO_CUMPLE,0.00,detalle no vacio
+VET-B039,VET-O039,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,NO_CUMPLE,0.00,vip | total >=1500
+VET-T040,VET-O040,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,NO_CUMPLE,4405.00,autorizacion
+VET-B040,VET-O040,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,CUMPLE,4405.00,
+VET-T041,VET-O041,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,CUMPLE,9178.00,
+VET-B041,VET-O041,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,NO_CUMPLE,9178.00,vip
+VET-T042,VET-O042,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,CUMPLE,4376.00,
+VET-B042,VET-O042,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,NO_CUMPLE,4376.00,vip
+VET-T043,VET-O043,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,CUMPLE,4631.00,
+VET-B043,VET-O043,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,NO_CUMPLE,4631.00,vip
+VET-T044,VET-O044,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,CUMPLE,7645.00,
+VET-B044,VET-O044,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,NO_CUMPLE,7645.00,vip
+VET-T045,VET-O045,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,CUMPLE,939.00,
+VET-B045,VET-O045,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,NO_CUMPLE,939.00,total >=1500 | not promocion
+VET-T046,VET-O046,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,NO_CUMPLE,2985.00,cliente activo
+VET-B046,VET-O046,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,NO_CUMPLE,2985.00,vip
+VET-T047,VET-O047,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,NO_CUMPLE,7274.00,cliente activo
+VET-B047,VET-O047,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,NO_CUMPLE,7274.00,vip
+VET-T048,VET-O048,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,NO_CUMPLE,1904.00,cliente activo | autorizacion
+VET-B048,VET-O048,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,NO_CUMPLE,1904.00,vip
+VET-T049,VET-O049,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,NO_CUMPLE,9575.00,cliente activo
+VET-B049,VET-O049,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,NO_CUMPLE,9575.00,vip
+VET-T050,VET-O050,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,NO_CUMPLE,7161.00,cliente activo
+VET-B050,VET-O050,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,CUMPLE,7161.00,
+VET-T051,VET-O051,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,CUMPLE,1591.00,
+VET-B051,VET-O051,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,NO_CUMPLE,1591.00,vip
+VET-T052,VET-O052,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,CUMPLE,2985.00,
+VET-B052,VET-O052,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,NO_CUMPLE,2985.00,vip
+VET-T053,VET-O053,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,CUMPLE,6906.00,
+VET-B053,VET-O053,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,NO_CUMPLE,6906.00,vip
+VET-T054,VET-O054,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,CUMPLE,3240.00,
+VET-B054,VET-O054,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,NO_CUMPLE,3240.00,vip | not promocion
+VET-T055,VET-O055,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,CUMPLE,3779.00,
+VET-B055,VET-O055,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,CUMPLE,3779.00,
+VET-T056,VET-O056,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,NO_CUMPLE,9349.00,autorizacion
+VET-B056,VET-O056,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,NO_CUMPLE,9349.00,vip
+VET-T057,VET-O057,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,CUMPLE,4347.00,
+VET-B057,VET-O057,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,NO_CUMPLE,4347.00,vip
+VET-T058,VET-O058,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,CUMPLE,7245.00,
+VET-B058,VET-O058,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,NO_CUMPLE,7245.00,vip
+VET-T059,VET-O059,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,CUMPLE,5570.00,
+VET-B059,VET-O059,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,NO_CUMPLE,5570.00,vip
+VET-T060,VET-O060,validar_operacion,validar cliente activo AND detalle no vacio AND autorizacion,CUMPLE,1336.00,
+VET-B060,VET-O060,evaluar_beneficio,VIP AND total >=1500 AND NOT promocion,NO_CUMPLE,1336.00,total >=1500

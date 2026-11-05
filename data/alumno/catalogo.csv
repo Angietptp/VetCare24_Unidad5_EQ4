@@ -1,0 +1,21 @@
+﻿recurso_id,descripcion,precio_mxn,capacidad_o_stock,habilitado
+VET-P001,Consulta 01,313.00,13,1
+VET-P002,Vacunación 02,384.00,16,1
+VET-P003,Desparasitación 03,455.00,19,1
+VET-P004,Cirugía menor 04,526.00,22,1
+VET-P005,Consulta 05,597.00,25,1
+VET-P006,Vacunación 06,668.00,28,1
+VET-P007,Desparasitación 07,739.00,31,1
+VET-P008,Cirugía menor 08,810.00,34,1
+VET-P009,Consulta 09,881.00,37,1
+VET-P010,Vacunación 10,952.00,40,1
+VET-P011,Desparasitación 11,1023.00,43,0
+VET-P012,Cirugía menor 12,1094.00,46,1
+VET-P013,Consulta 13,1165.00,49,1
+VET-P014,Vacunación 14,1236.00,52,1
+VET-P015,Desparasitación 15,1307.00,10,1
+VET-P016,Cirugía menor 16,1378.00,13,1
+VET-P017,Consulta 17,1449.00,16,1
+VET-P018,Vacunación 18,1520.00,19,1
+VET-P019,Desparasitación 19,1591.00,22,1
+VET-P020,Cirugía menor 20,1662.00,25,1

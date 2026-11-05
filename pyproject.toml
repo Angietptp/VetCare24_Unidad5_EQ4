@@ -1,0 +1,21 @@
+[project]
+name = "vetcare24"
+version = "0.1.0"
+description = "Componentes de lógica de negocio de VetCare 24 (PIA)"
+requires-python = ">=3.12"
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
+addopts = "-ra --cov=vetcare24 --cov-branch --cov-report=term-missing --cov-report=xml --cov-fail-under=80"
+
+[tool.coverage.run]
+source = ["src/vetcare24"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+src = ["src", "."]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B"]

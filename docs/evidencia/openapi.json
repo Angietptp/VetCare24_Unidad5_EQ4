@@ -1,0 +1,4002 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "VetCare 24 API",
+    "description": "Lógica de negocio de la clínica veterinaria VetCare 24 (CU-01: registrar y gestionar citas; CU-03: vacunación; CU-05: emergencias sin cita). Cada solicitud indica el rol en el encabezado `X-Rol`. Errores (siempre con `error.codigo`, `error.mensaje`, `error.detalles` y `error.motivos`): 400 solicitud mal formada o rol desconocido, 401 falta rol, 403 sin permiso, 404 no existe, 409 transición inválida, capacidad insuficiente o duplicado, 422 regla de negocio no cumplida.",
+    "version": "0.1.0"
+  },
+  "paths": {
+    "/health": {
+      "get": {
+        "tags": [
+          "Sistema"
+        ],
+        "summary": "Estado del servicio",
+        "operationId": "health_health_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "type": "object",
+                  "title": "Response Health Health Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/servicios": {
+      "get": {
+        "tags": [
+          "Catálogo"
+        ],
+        "summary": "Listar el catálogo de servicios",
+        "operationId": "listar_servicios_servicios_get",
+        "parameters": [
+          {
+            "name": "X-Rol",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Rol de quien opera: recepcion, veterinario, personal_clinico o responsable.",
+              "title": "X-Rol"
+            },
+            "description": "Rol de quien opera: recepcion, veterinario, personal_clinico o responsable."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ServicioOut"
+                  },
+                  "title": "Response Listar Servicios Servicios Get"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Solicitud mal formada o rol desconocido",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Falta el encabezado X-Rol",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "El rol no tiene permiso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No existe el recurso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Transición inválida, capacidad insuficiente o recurso duplicado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Regla de negocio no cumplida",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/propietarios": {
+      "post": {
+        "tags": [
+          "Registro"
+        ],
+        "summary": "Registrar un propietario",
+        "operationId": "registrar_propietario_propietarios_post",
+        "parameters": [
+          {
+            "name": "X-Rol",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Rol de quien opera: recepcion, veterinario, personal_clinico o responsable.",
+              "title": "X-Rol"
+            },
+            "description": "Rol de quien opera: recepcion, veterinario, personal_clinico o responsable."
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PropietarioIn"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PropietarioOut"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Solicitud mal formada o rol desconocido",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Falta el encabezado X-Rol",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "El rol no tiene permiso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No existe el recurso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Transición inválida, capacidad insuficiente o recurso duplicado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Regla de negocio no cumplida",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/propietarios/{propietario_id}": {
+      "get": {
+        "tags": [
+          "Registro"
+        ],
+        "summary": "Consultar un propietario",
+        "operationId": "obtener_propietario_propietarios__propietario_id__get",
+        "parameters": [
+          {
+            "name": "propietario_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Propietario Id"
+            }
+          },
+          {
+            "name": "X-Rol",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Rol de quien opera: recepcion, veterinario, personal_clinico o responsable.",
+              "title": "X-Rol"
+            },
+            "description": "Rol de quien opera: recepcion, veterinario, personal_clinico o responsable."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PropietarioOut"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Solicitud mal formada o rol desconocido",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Falta el encabezado X-Rol",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "El rol no tiene permiso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No existe el recurso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Transición inválida, capacidad insuficiente o recurso duplicado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Regla de negocio no cumplida",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/mascotas": {
+      "post": {
+        "tags": [
+          "Registro"
+        ],
+        "summary": "Registrar una mascota",
+        "operationId": "registrar_mascota_mascotas_post",
+        "parameters": [
+          {
+            "name": "X-Rol",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Rol de quien opera: recepcion, veterinario, personal_clinico o responsable.",
+              "title": "X-Rol"
+            },
+            "description": "Rol de quien opera: recepcion, veterinario, personal_clinico o responsable."
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MascotaIn"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MascotaOut"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Solicitud mal formada o rol desconocido",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Falta el encabezado X-Rol",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "El rol no tiene permiso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No existe el recurso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Transición inválida, capacidad insuficiente o recurso duplicado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Regla de negocio no cumplida",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/mascotas/{mascota_id}": {
+      "get": {
+        "tags": [
+          "Registro"
+        ],
+        "summary": "Consultar una mascota",
+        "operationId": "obtener_mascota_mascotas__mascota_id__get",
+        "parameters": [
+          {
+            "name": "mascota_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Mascota Id"
+            }
+          },
+          {
+            "name": "X-Rol",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Rol de quien opera: recepcion, veterinario, personal_clinico o responsable.",
+              "title": "X-Rol"
+            },
+            "description": "Rol de quien opera: recepcion, veterinario, personal_clinico o responsable."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MascotaOut"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Solicitud mal formada o rol desconocido",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Falta el encabezado X-Rol",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "El rol no tiene permiso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No existe el recurso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Transición inválida, capacidad insuficiente o recurso duplicado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Regla de negocio no cumplida",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/citas": {
+      "post": {
+        "tags": [
+          "Citas"
+        ],
+        "summary": "Solicitar una cita",
+        "operationId": "solicitar_cita_citas_post",
+        "parameters": [
+          {
+            "name": "X-Rol",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Rol de quien opera: recepcion, veterinario, personal_clinico o responsable.",
+              "title": "X-Rol"
+            },
+            "description": "Rol de quien opera: recepcion, veterinario, personal_clinico o responsable."
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CitaIn"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CitaOut"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Solicitud mal formada o rol desconocido",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Falta el encabezado X-Rol",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "El rol no tiene permiso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No existe el recurso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Transición inválida, capacidad insuficiente o recurso duplicado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Regla de negocio no cumplida",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Citas"
+        ],
+        "summary": "Listar citas (filtros opcionales)",
+        "operationId": "listar_citas_citas_get",
+        "parameters": [
+          {
+            "name": "estado",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "$ref": "#/components/schemas/EstadoCita"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Filtra por estado.",
+              "title": "Estado"
+            },
+            "description": "Filtra por estado."
+          },
+          {
+            "name": "propietario_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Filtra por propietario.",
+              "title": "Propietario Id"
+            },
+            "description": "Filtra por propietario."
+          },
+          {
+            "name": "X-Rol",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Rol de quien opera: recepcion, veterinario, personal_clinico o responsable.",
+              "title": "X-Rol"
+            },
+            "description": "Rol de quien opera: recepcion, veterinario, personal_clinico o responsable."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CitaOut"
+                  },
+                  "title": "Response Listar Citas Citas Get"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Solicitud mal formada o rol desconocido",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Falta el encabezado X-Rol",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "El rol no tiene permiso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No existe el recurso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Transición inválida, capacidad insuficiente o recurso duplicado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Regla de negocio no cumplida",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/citas/{cita_id}": {
+      "get": {
+        "tags": [
+          "Citas"
+        ],
+        "summary": "Consultar una cita",
+        "operationId": "obtener_cita_citas__cita_id__get",
+        "parameters": [
+          {
+            "name": "cita_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Cita Id"
+            }
+          },
+          {
+            "name": "X-Rol",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Rol de quien opera: recepcion, veterinario, personal_clinico o responsable.",
+              "title": "X-Rol"
+            },
+            "description": "Rol de quien opera: recepcion, veterinario, personal_clinico o responsable."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CitaOut"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Solicitud mal formada o rol desconocido",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Falta el encabezado X-Rol",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "El rol no tiene permiso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No existe el recurso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Transición inválida, capacidad insuficiente o recurso duplicado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Regla de negocio no cumplida",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/citas/{cita_id}/servicios": {
+      "put": {
+        "tags": [
+          "Citas"
+        ],
+        "summary": "Modificar los servicios de una cita",
+        "operationId": "modificar_cita_citas__cita_id__servicios_put",
+        "parameters": [
+          {
+            "name": "cita_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Cita Id"
+            }
+          },
+          {
+            "name": "X-Rol",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Rol de quien opera: recepcion, veterinario, personal_clinico o responsable.",
+              "title": "X-Rol"
+            },
+            "description": "Rol de quien opera: recepcion, veterinario, personal_clinico o responsable."
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ModificarServiciosIn"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CitaOut"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Solicitud mal formada o rol desconocido",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Falta el encabezado X-Rol",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "El rol no tiene permiso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No existe el recurso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Transición inválida, capacidad insuficiente o recurso duplicado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Regla de negocio no cumplida",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/citas/{cita_id}/confirmar": {
+      "post": {
+        "tags": [
+          "Citas"
+        ],
+        "summary": "Confirmar una cita (SOLICITADA → CONFIRMADA)",
+        "operationId": "confirmar_cita_citas__cita_id__confirmar_post",
+        "parameters": [
+          {
+            "name": "cita_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Cita Id"
+            }
+          },
+          {
+            "name": "X-Rol",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Rol de quien opera: recepcion, veterinario, personal_clinico o responsable.",
+              "title": "X-Rol"
+            },
+            "description": "Rol de quien opera: recepcion, veterinario, personal_clinico o responsable."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CitaOut"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Solicitud mal formada o rol desconocido",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Falta el encabezado X-Rol",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "El rol no tiene permiso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No existe el recurso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Transición inválida, capacidad insuficiente o recurso duplicado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Regla de negocio no cumplida",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/citas/{cita_id}/realizar": {
+      "post": {
+        "tags": [
+          "Citas"
+        ],
+        "summary": "Realizar una cita (CONFIRMADA → REALIZADA)",
+        "operationId": "realizar_cita_citas__cita_id__realizar_post",
+        "parameters": [
+          {
+            "name": "cita_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Cita Id"
+            }
+          },
+          {
+            "name": "X-Rol",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Rol de quien opera: recepcion, veterinario, personal_clinico o responsable.",
+              "title": "X-Rol"
+            },
+            "description": "Rol de quien opera: recepcion, veterinario, personal_clinico o responsable."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CitaOut"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Solicitud mal formada o rol desconocido",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Falta el encabezado X-Rol",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "El rol no tiene permiso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No existe el recurso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Transición inválida, capacidad insuficiente o recurso duplicado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Regla de negocio no cumplida",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/citas/{cita_id}/cancelar": {
+      "post": {
+        "tags": [
+          "Citas"
+        ],
+        "summary": "Cancelar una cita",
+        "operationId": "cancelar_cita_citas__cita_id__cancelar_post",
+        "parameters": [
+          {
+            "name": "cita_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Cita Id"
+            }
+          },
+          {
+            "name": "X-Rol",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Rol de quien opera: recepcion, veterinario, personal_clinico o responsable.",
+              "title": "X-Rol"
+            },
+            "description": "Rol de quien opera: recepcion, veterinario, personal_clinico o responsable."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CitaOut"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Solicitud mal formada o rol desconocido",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Falta el encabezado X-Rol",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "El rol no tiene permiso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No existe el recurso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Transición inválida, capacidad insuficiente o recurso duplicado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Regla de negocio no cumplida",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/citas/{cita_id}/evaluaciones/{regla}": {
+      "get": {
+        "tags": [
+          "Evaluaciones"
+        ],
+        "summary": "Evaluar una regla de elegibilidad sobre una cita",
+        "description": "`procesamiento`: propietario activo, cita con servicios y autorizada (D-03). `beneficio`: propietario preferente, total de al menos 1,500 MXN y sin promoción activa (extensión del paquete, D-05). No modifica nada: responde 200 con `cumple` y los `motivos`.",
+        "operationId": "evaluar_cita_citas__cita_id__evaluaciones__regla__get",
+        "parameters": [
+          {
+            "name": "cita_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Cita Id"
+            }
+          },
+          {
+            "name": "regla",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/ReglaEvaluable"
+            }
+          },
+          {
+            "name": "X-Rol",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Rol de quien opera: recepcion, veterinario, personal_clinico o responsable.",
+              "title": "X-Rol"
+            },
+            "description": "Rol de quien opera: recepcion, veterinario, personal_clinico o responsable."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EvaluacionOut"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Solicitud mal formada o rol desconocido",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Falta el encabezado X-Rol",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "El rol no tiene permiso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No existe el recurso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Transición inválida, capacidad insuficiente o recurso duplicado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Regla de negocio no cumplida",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/eventos": {
+      "get": {
+        "tags": [
+          "Eventos"
+        ],
+        "summary": "Listar los eventos de dominio guardados",
+        "description": "Eventos publicados por las citas (D-14), en el orden en que ocurrieron.",
+        "operationId": "listar_eventos_eventos_get",
+        "parameters": [
+          {
+            "name": "X-Rol",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Rol de quien opera: recepcion, veterinario, personal_clinico o responsable.",
+              "title": "X-Rol"
+            },
+            "description": "Rol de quien opera: recepcion, veterinario, personal_clinico o responsable."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EventoOut"
+                  },
+                  "title": "Response Listar Eventos Eventos Get"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Solicitud mal formada o rol desconocido",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Falta el encabezado X-Rol",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "El rol no tiene permiso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No existe el recurso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Transición inválida, capacidad insuficiente o recurso duplicado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Regla de negocio no cumplida",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/mascotas/{mascota_id}/vacunaciones": {
+      "post": {
+        "tags": [
+          "Vacunación"
+        ],
+        "summary": "Registrar la aplicación de una vacuna",
+        "description": "Solo el veterinario. El registro se guarda SIEMPRE: no depende del esquema de la vacuna. Junto con el registro se responde el seguimiento (próxima aplicación y si es refuerzo); si la vacuna no tiene un esquema definido y validado, el seguimiento queda `pendiente_de_esquema` (no es un error). El historial no se modifica ni se borra.",
+        "operationId": "registrar_vacunacion_mascotas__mascota_id__vacunaciones_post",
+        "parameters": [
+          {
+            "name": "mascota_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Mascota Id"
+            }
+          },
+          {
+            "name": "X-Rol",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Rol de quien opera: recepcion, veterinario, personal_clinico o responsable.",
+              "title": "X-Rol"
+            },
+            "description": "Rol de quien opera: recepcion, veterinario, personal_clinico o responsable."
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VacunacionIn"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VacunacionRegistradaOut"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Solicitud mal formada o rol desconocido",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Falta el encabezado X-Rol",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "El rol no tiene permiso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No existe el recurso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Transición inválida, capacidad insuficiente o recurso duplicado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Regla de negocio no cumplida",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Vacunación"
+        ],
+        "summary": "Historial de vacunas de una mascota",
+        "description": "De la más antigua a la más reciente.",
+        "operationId": "historial_de_vacunas_mascotas__mascota_id__vacunaciones_get",
+        "parameters": [
+          {
+            "name": "mascota_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Mascota Id"
+            }
+          },
+          {
+            "name": "X-Rol",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Rol de quien opera: recepcion, veterinario, personal_clinico o responsable.",
+              "title": "X-Rol"
+            },
+            "description": "Rol de quien opera: recepcion, veterinario, personal_clinico o responsable."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/VacunacionOut"
+                  },
+                  "title": "Response Historial De Vacunas Mascotas  Mascota Id  Vacunaciones Get"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Solicitud mal formada o rol desconocido",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Falta el encabezado X-Rol",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "El rol no tiene permiso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No existe el recurso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Transición inválida, capacidad insuficiente o recurso duplicado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Regla de negocio no cumplida",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/mascotas/{mascota_id}/vacunaciones/seguimiento": {
+      "get": {
+        "tags": [
+          "Vacunación"
+        ],
+        "summary": "Seguimiento de las vacunas de una mascota",
+        "description": "Una fila por tipo de vacuna, con la próxima aplicación y si es refuerzo. Se calcula en cada consulta a partir del historial.",
+        "operationId": "seguimiento_de_vacunas_mascotas__mascota_id__vacunaciones_seguimiento_get",
+        "parameters": [
+          {
+            "name": "mascota_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Mascota Id"
+            }
+          },
+          {
+            "name": "X-Rol",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Rol de quien opera: recepcion, veterinario, personal_clinico o responsable.",
+              "title": "X-Rol"
+            },
+            "description": "Rol de quien opera: recepcion, veterinario, personal_clinico o responsable."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SeguimientoOut"
+                  },
+                  "title": "Response Seguimiento De Vacunas Mascotas  Mascota Id  Vacunaciones Seguimiento Get"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Solicitud mal formada o rol desconocido",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Falta el encabezado X-Rol",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "El rol no tiene permiso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No existe el recurso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Transición inválida, capacidad insuficiente o recurso duplicado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Regla de negocio no cumplida",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/vacunas/proximas": {
+      "get": {
+        "tags": [
+          "Vacunación"
+        ],
+        "summary": "Vacunas vencidas o por vencer (para recordatorios)",
+        "description": "De todas las mascotas: las vencidas y las que vencen en los próximos `dias`. El BRD no define el envío de recordatorios; aquí solo se identifica a quién avisar y qué vacuna.",
+        "operationId": "vacunas_proximas_vacunas_proximas_get",
+        "parameters": [
+          {
+            "name": "dias",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "description": "Días de anticipación (0 = solo vencidas).",
+              "default": 30,
+              "title": "Dias"
+            },
+            "description": "Días de anticipación (0 = solo vencidas)."
+          },
+          {
+            "name": "fecha_de_referencia",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Por omisión, hoy (AAAA-MM-DD).",
+              "title": "Fecha De Referencia"
+            },
+            "description": "Por omisión, hoy (AAAA-MM-DD)."
+          },
+          {
+            "name": "X-Rol",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Rol de quien opera: recepcion, veterinario, personal_clinico o responsable.",
+              "title": "X-Rol"
+            },
+            "description": "Rol de quien opera: recepcion, veterinario, personal_clinico o responsable."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RecordatorioOut"
+                  },
+                  "title": "Response Vacunas Proximas Vacunas Proximas Get"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Solicitud mal formada o rol desconocido",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Falta el encabezado X-Rol",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "El rol no tiene permiso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No existe el recurso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Transición inválida, capacidad insuficiente o recurso duplicado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Regla de negocio no cumplida",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/esquemas-vacunacion": {
+      "get": {
+        "tags": [
+          "Vacunación"
+        ],
+        "summary": "Esquemas de vacunación de referencia",
+        "description": "Frecuencia y refuerzo de cada vacuna. Solo los validados se usan para calcular el seguimiento (ADR-05).",
+        "operationId": "listar_esquemas_esquemas_vacunacion_get",
+        "parameters": [
+          {
+            "name": "X-Rol",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Rol de quien opera: recepcion, veterinario, personal_clinico o responsable.",
+              "title": "X-Rol"
+            },
+            "description": "Rol de quien opera: recepcion, veterinario, personal_clinico o responsable."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EsquemaOut"
+                  },
+                  "title": "Response Listar Esquemas Esquemas Vacunacion Get"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Solicitud mal formada o rol desconocido",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Falta el encabezado X-Rol",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "El rol no tiene permiso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No existe el recurso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Transición inválida, capacidad insuficiente o recurso duplicado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Regla de negocio no cumplida",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/emergencias": {
+      "post": {
+        "tags": [
+          "Emergencias"
+        ],
+        "summary": "Registrar una emergencia (sin cita previa)",
+        "description": "Solo Recepción (A-01). NO exige una cita (R-06, NB-19) y la mascota es opcional (P3). Registrar la emergencia activa el protocolo y, después de guardarla, se notifica al veterinario. Si el aviso falla, la emergencia queda registrada y `notificacion` dice `pendiente_de_notificar`.",
+        "operationId": "atender_emergencia_emergencias_post",
+        "parameters": [
+          {
+            "name": "X-Rol",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Rol de quien opera: recepcion, veterinario, personal_clinico o responsable.",
+              "title": "X-Rol"
+            },
+            "description": "Rol de quien opera: recepcion, veterinario, personal_clinico o responsable."
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EmergenciaIn"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EmergenciaRegistradaOut"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Solicitud mal formada o rol desconocido",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Falta el encabezado X-Rol",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "El rol no tiene permiso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No existe el recurso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Transición inválida, capacidad insuficiente o recurso duplicado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Regla de negocio no cumplida",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Emergencias"
+        ],
+        "summary": "Listar emergencias (filtros opcionales)",
+        "description": "De la más antigua a la más reciente.",
+        "operationId": "listar_emergencias_emergencias_get",
+        "parameters": [
+          {
+            "name": "estado",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "$ref": "#/components/schemas/EstadoEmergencia"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Filtra por estado.",
+              "title": "Estado"
+            },
+            "description": "Filtra por estado."
+          },
+          {
+            "name": "mascota_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Filtra por mascota.",
+              "title": "Mascota Id"
+            },
+            "description": "Filtra por mascota."
+          },
+          {
+            "name": "X-Rol",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Rol de quien opera: recepcion, veterinario, personal_clinico o responsable.",
+              "title": "X-Rol"
+            },
+            "description": "Rol de quien opera: recepcion, veterinario, personal_clinico o responsable."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EmergenciaOut"
+                  },
+                  "title": "Response Listar Emergencias Emergencias Get"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Solicitud mal formada o rol desconocido",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Falta el encabezado X-Rol",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "El rol no tiene permiso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No existe el recurso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Transición inválida, capacidad insuficiente o recurso duplicado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Regla de negocio no cumplida",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/emergencias/{emergencia_id}/iniciar-atencion": {
+      "post": {
+        "tags": [
+          "Emergencias"
+        ],
+        "summary": "Iniciar la atención (IDENTIFICADA → EN_ATENCION)",
+        "description": "Solo el personal clínico (A-01, US20). Iniciarla dos veces responde 409 `TRANSICION_INVALIDA`.",
+        "operationId": "iniciar_atencion_de_emergencia_emergencias__emergencia_id__iniciar_atencion_post",
+        "parameters": [
+          {
+            "name": "emergencia_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Emergencia Id"
+            }
+          },
+          {
+            "name": "X-Rol",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Rol de quien opera: recepcion, veterinario, personal_clinico o responsable.",
+              "title": "X-Rol"
+            },
+            "description": "Rol de quien opera: recepcion, veterinario, personal_clinico o responsable."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EmergenciaOut"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Solicitud mal formada o rol desconocido",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Falta el encabezado X-Rol",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "El rol no tiene permiso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No existe el recurso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Transición inválida, capacidad insuficiente o recurso duplicado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Regla de negocio no cumplida",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/emergencias/{emergencia_id}": {
+      "get": {
+        "tags": [
+          "Emergencias"
+        ],
+        "summary": "Consultar una emergencia",
+        "operationId": "obtener_emergencia_emergencias__emergencia_id__get",
+        "parameters": [
+          {
+            "name": "emergencia_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Emergencia Id"
+            }
+          },
+          {
+            "name": "X-Rol",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Rol de quien opera: recepcion, veterinario, personal_clinico o responsable.",
+              "title": "X-Rol"
+            },
+            "description": "Rol de quien opera: recepcion, veterinario, personal_clinico o responsable."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EmergenciaOut"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Solicitud mal formada o rol desconocido",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Falta el encabezado X-Rol",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "El rol no tiene permiso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No existe el recurso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Transición inválida, capacidad insuficiente o recurso duplicado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Regla de negocio no cumplida",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/mascotas/{mascota_id}/evaluaciones/atencion": {
+      "get": {
+        "tags": [
+          "Evaluaciones"
+        ],
+        "summary": "¿La mascota puede recibir atención?",
+        "description": "R-06: `TieneCitaConfirmada OR TieneEmergenciaActiva`. No modifica nada: responde 200 con `cumple` y los `motivos`.",
+        "operationId": "evaluar_atencion_mascotas__mascota_id__evaluaciones_atencion_get",
+        "parameters": [
+          {
+            "name": "mascota_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Mascota Id"
+            }
+          },
+          {
+            "name": "X-Rol",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Rol de quien opera: recepcion, veterinario, personal_clinico o responsable.",
+              "title": "X-Rol"
+            },
+            "description": "Rol de quien opera: recepcion, veterinario, personal_clinico o responsable."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EvaluacionOut"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Solicitud mal formada o rol desconocido",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Falta el encabezado X-Rol",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "El rol no tiene permiso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No existe el recurso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Transición inválida, capacidad insuficiente o recurso duplicado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Regla de negocio no cumplida",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/avisos-veterinario": {
+      "get": {
+        "tags": [
+          "Emergencias"
+        ],
+        "summary": "Avisos de emergencia enviados al veterinario",
+        "description": "Bandeja en memoria del NotificadorDeVeterinario (el BRD no define el canal). Se vacía al reiniciar la aplicación.",
+        "operationId": "avisos_al_veterinario_avisos_veterinario_get",
+        "parameters": [
+          {
+            "name": "X-Rol",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Rol de quien opera: recepcion, veterinario, personal_clinico o responsable.",
+              "title": "X-Rol"
+            },
+            "description": "Rol de quien opera: recepcion, veterinario, personal_clinico o responsable."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AvisoOut"
+                  },
+                  "title": "Response Avisos Al Veterinario Avisos Veterinario Get"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Solicitud mal formada o rol desconocido",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Falta el encabezado X-Rol",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "El rol no tiene permiso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No existe el recurso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Transición inválida, capacidad insuficiente o recurso duplicado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Regla de negocio no cumplida",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AvisoOut": {
+        "properties": {
+          "emergencia_id": {
+            "type": "string",
+            "title": "Emergencia Id"
+          },
+          "mascota_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Mascota Id"
+          },
+          "motivo": {
+            "type": "string",
+            "title": "Motivo"
+          },
+          "identificada_en": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Identificada En"
+          }
+        },
+        "type": "object",
+        "required": [
+          "emergencia_id",
+          "mascota_id",
+          "motivo",
+          "identificada_en"
+        ],
+        "title": "AvisoOut"
+      },
+      "CitaIn": {
+        "properties": {
+          "propietario_id": {
+            "type": "string",
+            "title": "Propietario Id"
+          },
+          "mascota_id": {
+            "type": "string",
+            "title": "Mascota Id"
+          },
+          "servicios": {
+            "items": {
+              "$ref": "#/components/schemas/LineaIn"
+            },
+            "type": "array",
+            "title": "Servicios"
+          },
+          "fecha_solicitud": {
+            "type": "string",
+            "format": "date",
+            "title": "Fecha Solicitud"
+          },
+          "autorizada": {
+            "type": "boolean",
+            "title": "Autorizada"
+          },
+          "promocion_activa": {
+            "type": "boolean",
+            "title": "Promocion Activa",
+            "default": false
+          },
+          "referencia": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Referencia"
+          },
+          "cita_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Cita Id",
+            "description": "Opcional; si falta se genera."
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "propietario_id",
+          "mascota_id",
+          "servicios",
+          "fecha_solicitud",
+          "autorizada"
+        ],
+        "title": "CitaIn"
+      },
+      "CitaOut": {
+        "properties": {
+          "cita_id": {
+            "type": "string",
+            "title": "Cita Id"
+          },
+          "propietario_id": {
+            "type": "string",
+            "title": "Propietario Id"
+          },
+          "mascota_id": {
+            "type": "string",
+            "title": "Mascota Id"
+          },
+          "estado": {
+            "type": "string",
+            "title": "Estado"
+          },
+          "servicios": {
+            "items": {
+              "$ref": "#/components/schemas/LineaOut"
+            },
+            "type": "array",
+            "title": "Servicios"
+          },
+          "fecha_solicitud": {
+            "type": "string",
+            "format": "date",
+            "title": "Fecha Solicitud"
+          },
+          "autorizada": {
+            "type": "boolean",
+            "title": "Autorizada"
+          },
+          "promocion_activa": {
+            "type": "boolean",
+            "title": "Promocion Activa"
+          },
+          "referencia": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Referencia"
+          },
+          "total_mxn": {
+            "type": "string",
+            "title": "Total Mxn",
+            "description": "Suma de precio x cantidad.",
+            "examples": [
+              "7587.00"
+            ]
+          }
+        },
+        "type": "object",
+        "required": [
+          "cita_id",
+          "propietario_id",
+          "mascota_id",
+          "estado",
+          "servicios",
+          "fecha_solicitud",
+          "autorizada",
+          "promocion_activa",
+          "referencia",
+          "total_mxn"
+        ],
+        "title": "CitaOut"
+      },
+      "CuerpoDeError": {
+        "properties": {
+          "codigo": {
+            "type": "string",
+            "title": "Codigo",
+            "description": "Estable, para programas.",
+            "examples": [
+              "TRANSICION_INVALIDA"
+            ]
+          },
+          "mensaje": {
+            "type": "string",
+            "title": "Mensaje",
+            "description": "Frase en español lista para mostrarse."
+          },
+          "detalles": {
+            "items": {
+              "$ref": "#/components/schemas/DetalleDeCampo"
+            },
+            "type": "array",
+            "title": "Detalles",
+            "description": "Campos inválidos de una solicitud mal formada."
+          },
+          "motivos": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Motivos",
+            "description": "Códigos de las reglas incumplidas.",
+            "examples": [
+              [
+                "ACTOR_INACTIVO"
+              ]
+            ]
+          }
+        },
+        "type": "object",
+        "required": [
+          "codigo",
+          "mensaje"
+        ],
+        "title": "CuerpoDeError"
+      },
+      "DetalleDeCampo": {
+        "properties": {
+          "campo": {
+            "type": "string",
+            "title": "Campo",
+            "examples": [
+              "servicios.0.cantidad"
+            ]
+          },
+          "mensaje": {
+            "type": "string",
+            "title": "Mensaje",
+            "examples": [
+              "El campo «servicios.0.cantidad» debe ser un número entero."
+            ]
+          }
+        },
+        "type": "object",
+        "required": [
+          "campo",
+          "mensaje"
+        ],
+        "title": "DetalleDeCampo"
+      },
+      "EmergenciaIn": {
+        "properties": {
+          "motivo": {
+            "type": "string",
+            "title": "Motivo",
+            "examples": [
+              "Atropellamiento; sangrado en pata trasera"
+            ]
+          },
+          "mascota_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Mascota Id",
+            "description": "Opcional (P3): la mascota puede no estar registrada."
+          },
+          "datos_paciente": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Datos Paciente",
+            "description": "Datos disponibles del paciente y su propietario, en texto libre.",
+            "examples": [
+              "Perro mestizo, ~10 kg, sin registro; lo trae un vecino"
+            ]
+          },
+          "emergencia_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Emergencia Id",
+            "description": "Opcional; si no se indica, el sistema lo genera."
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "motivo"
+        ],
+        "title": "EmergenciaIn"
+      },
+      "EmergenciaOut": {
+        "properties": {
+          "emergencia_id": {
+            "type": "string",
+            "title": "Emergencia Id"
+          },
+          "mascota_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Mascota Id"
+          },
+          "motivo": {
+            "type": "string",
+            "title": "Motivo"
+          },
+          "datos_paciente": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Datos Paciente"
+          },
+          "estado": {
+            "type": "string",
+            "title": "Estado",
+            "description": "`IDENTIFICADA` o `EN_ATENCION`.",
+            "examples": [
+              "IDENTIFICADA"
+            ]
+          },
+          "identificada_en": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Identificada En",
+            "description": "Fecha y hora con zona horaria."
+          },
+          "atendida_en": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Atendida En",
+            "description": "Solo si el estado es `EN_ATENCION`."
+          }
+        },
+        "type": "object",
+        "required": [
+          "emergencia_id",
+          "mascota_id",
+          "motivo",
+          "datos_paciente",
+          "estado",
+          "identificada_en",
+          "atendida_en"
+        ],
+        "title": "EmergenciaOut"
+      },
+      "EmergenciaRegistradaOut": {
+        "properties": {
+          "emergencia": {
+            "$ref": "#/components/schemas/EmergenciaOut"
+          },
+          "protocolo_activado": {
+            "type": "boolean",
+            "title": "Protocolo Activado"
+          },
+          "notificacion": {
+            "type": "string",
+            "title": "Notificacion",
+            "description": "`notificado`, o `pendiente_de_notificar` si el aviso al veterinario falló. El registro se conserva en ambos casos.",
+            "examples": [
+              "notificado"
+            ]
+          }
+        },
+        "type": "object",
+        "required": [
+          "emergencia",
+          "protocolo_activado",
+          "notificacion"
+        ],
+        "title": "EmergenciaRegistradaOut"
+      },
+      "ErrorOut": {
+        "properties": {
+          "error": {
+            "$ref": "#/components/schemas/CuerpoDeError"
+          }
+        },
+        "type": "object",
+        "required": [
+          "error"
+        ],
+        "title": "ErrorOut",
+        "description": "Forma común de todos los errores: {\"error\": {codigo, mensaje, detalles, motivos}}."
+      },
+      "EsquemaOut": {
+        "properties": {
+          "vacuna": {
+            "type": "string",
+            "title": "Vacuna"
+          },
+          "frecuencia_dias": {
+            "type": "integer",
+            "title": "Frecuencia Dias",
+            "description": "Días hasta la siguiente aplicación."
+          },
+          "requiere_refuerzo": {
+            "type": "boolean",
+            "title": "Requiere Refuerzo"
+          },
+          "validado": {
+            "type": "boolean",
+            "title": "Validado",
+            "description": "Solo un esquema validado se usa para calcular."
+          }
+        },
+        "type": "object",
+        "required": [
+          "vacuna",
+          "frecuencia_dias",
+          "requiere_refuerzo",
+          "validado"
+        ],
+        "title": "EsquemaOut"
+      },
+      "EstadoCita": {
+        "type": "string",
+        "enum": [
+          "SOLICITADA",
+          "CONFIRMADA",
+          "REALIZADA",
+          "CANCELADA"
+        ],
+        "title": "EstadoCita"
+      },
+      "EstadoEmergencia": {
+        "type": "string",
+        "enum": [
+          "IDENTIFICADA",
+          "EN_ATENCION"
+        ],
+        "title": "EstadoEmergencia"
+      },
+      "EvaluacionOut": {
+        "properties": {
+          "regla": {
+            "type": "string",
+            "title": "Regla",
+            "examples": [
+              "procesamiento"
+            ]
+          },
+          "cumple": {
+            "type": "boolean",
+            "title": "Cumple"
+          },
+          "motivos": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Motivos",
+            "description": "Códigos de lo que no se cumple (vacío si cumple)."
+          }
+        },
+        "type": "object",
+        "required": [
+          "regla",
+          "cumple",
+          "motivos"
+        ],
+        "title": "EvaluacionOut"
+      },
+      "EventoOut": {
+        "properties": {
+          "secuencia": {
+            "type": "integer",
+            "title": "Secuencia"
+          },
+          "evento": {
+            "type": "string",
+            "title": "Evento",
+            "examples": [
+              "CitaAgendada"
+            ]
+          },
+          "agregado_tipo": {
+            "type": "string",
+            "title": "Agregado Tipo",
+            "description": "Qué agregado emitió el evento.",
+            "examples": [
+              "Cita"
+            ]
+          },
+          "agregado_id": {
+            "type": "string",
+            "title": "Agregado Id"
+          },
+          "cita_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Cita Id",
+            "description": "El mismo id, solo si el evento es de una cita."
+          },
+          "ocurrido_en": {
+            "type": "string",
+            "title": "Ocurrido En"
+          },
+          "payload": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Payload"
+          }
+        },
+        "type": "object",
+        "required": [
+          "secuencia",
+          "evento",
+          "agregado_tipo",
+          "agregado_id",
+          "cita_id",
+          "ocurrido_en",
+          "payload"
+        ],
+        "title": "EventoOut"
+      },
+      "LineaIn": {
+        "properties": {
+          "servicio_id": {
+            "type": "string",
+            "title": "Servicio Id"
+          },
+          "cantidad": {
+            "type": "integer",
+            "title": "Cantidad",
+            "description": "Unidades solicitadas (mínimo 1)."
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "servicio_id",
+          "cantidad"
+        ],
+        "title": "LineaIn"
+      },
+      "LineaOut": {
+        "properties": {
+          "servicio_id": {
+            "type": "string",
+            "title": "Servicio Id"
+          },
+          "cantidad": {
+            "type": "integer",
+            "title": "Cantidad"
+          }
+        },
+        "type": "object",
+        "required": [
+          "servicio_id",
+          "cantidad"
+        ],
+        "title": "LineaOut"
+      },
+      "MascotaIn": {
+        "properties": {
+          "propietario_id": {
+            "type": "string",
+            "title": "Propietario Id"
+          },
+          "nombre": {
+            "type": "string",
+            "title": "Nombre"
+          },
+          "especie": {
+            "type": "string",
+            "title": "Especie"
+          },
+          "raza": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Raza"
+          },
+          "sexo": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sexo"
+          },
+          "fecha_nacimiento": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Fecha Nacimiento"
+          },
+          "peso_kg": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Peso Kg"
+          },
+          "alergias": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Alergias"
+          },
+          "mascota_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Mascota Id",
+            "description": "Opcional; si falta se genera."
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "propietario_id",
+          "nombre",
+          "especie"
+        ],
+        "title": "MascotaIn"
+      },
+      "MascotaOut": {
+        "properties": {
+          "mascota_id": {
+            "type": "string",
+            "title": "Mascota Id"
+          },
+          "propietario_id": {
+            "type": "string",
+            "title": "Propietario Id"
+          },
+          "nombre": {
+            "type": "string",
+            "title": "Nombre"
+          },
+          "especie": {
+            "type": "string",
+            "title": "Especie"
+          },
+          "raza": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Raza"
+          },
+          "sexo": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sexo"
+          },
+          "fecha_nacimiento": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Fecha Nacimiento"
+          },
+          "peso_kg": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Peso Kg"
+          },
+          "alergias": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Alergias"
+          }
+        },
+        "type": "object",
+        "required": [
+          "mascota_id",
+          "propietario_id",
+          "nombre",
+          "especie",
+          "raza",
+          "sexo",
+          "fecha_nacimiento",
+          "peso_kg",
+          "alergias"
+        ],
+        "title": "MascotaOut"
+      },
+      "ModificarServiciosIn": {
+        "properties": {
+          "servicios": {
+            "items": {
+              "$ref": "#/components/schemas/LineaIn"
+            },
+            "type": "array",
+            "title": "Servicios"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "servicios"
+        ],
+        "title": "ModificarServiciosIn"
+      },
+      "PropietarioIn": {
+        "properties": {
+          "nombre": {
+            "type": "string",
+            "title": "Nombre"
+          },
+          "activo": {
+            "type": "boolean",
+            "title": "Activo",
+            "default": true
+          },
+          "preferente": {
+            "type": "boolean",
+            "title": "Preferente",
+            "default": false
+          },
+          "propietario_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Propietario Id",
+            "description": "Opcional; si falta se genera."
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "nombre"
+        ],
+        "title": "PropietarioIn"
+      },
+      "PropietarioOut": {
+        "properties": {
+          "propietario_id": {
+            "type": "string",
+            "title": "Propietario Id"
+          },
+          "nombre": {
+            "type": "string",
+            "title": "Nombre"
+          },
+          "activo": {
+            "type": "boolean",
+            "title": "Activo"
+          },
+          "preferente": {
+            "type": "boolean",
+            "title": "Preferente"
+          }
+        },
+        "type": "object",
+        "required": [
+          "propietario_id",
+          "nombre",
+          "activo",
+          "preferente"
+        ],
+        "title": "PropietarioOut"
+      },
+      "RecordatorioOut": {
+        "properties": {
+          "mascota_id": {
+            "type": "string",
+            "title": "Mascota Id"
+          },
+          "propietario_id": {
+            "type": "string",
+            "title": "Propietario Id"
+          },
+          "vacuna": {
+            "type": "string",
+            "title": "Vacuna"
+          },
+          "proxima_aplicacion": {
+            "type": "string",
+            "format": "date",
+            "title": "Proxima Aplicacion"
+          },
+          "es_refuerzo": {
+            "type": "boolean",
+            "title": "Es Refuerzo"
+          },
+          "vencida": {
+            "type": "boolean",
+            "title": "Vencida"
+          }
+        },
+        "type": "object",
+        "required": [
+          "mascota_id",
+          "propietario_id",
+          "vacuna",
+          "proxima_aplicacion",
+          "es_refuerzo",
+          "vencida"
+        ],
+        "title": "RecordatorioOut"
+      },
+      "ReglaEvaluable": {
+        "type": "string",
+        "enum": [
+          "procesamiento",
+          "beneficio"
+        ],
+        "title": "ReglaEvaluable",
+        "description": "Reglas de elegibilidad que se pueden consultar sin cambiar nada (D-03, D-05)."
+      },
+      "SeguimientoOut": {
+        "properties": {
+          "vacuna": {
+            "type": "string",
+            "title": "Vacuna"
+          },
+          "ultima_aplicacion": {
+            "type": "string",
+            "format": "date",
+            "title": "Ultima Aplicacion"
+          },
+          "estado": {
+            "type": "string",
+            "title": "Estado",
+            "description": "`calculado`, o `pendiente_de_esquema` si la vacuna no tiene un esquema definido y validado (no es un error).",
+            "examples": [
+              "calculado"
+            ]
+          },
+          "proxima_aplicacion": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Proxima Aplicacion",
+            "description": "Solo si el estado es `calculado`."
+          },
+          "es_refuerzo": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Es Refuerzo",
+            "description": "Si la siguiente aplicación es un refuerzo."
+          },
+          "motivos": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Motivos",
+            "examples": [
+              [
+                "ESQUEMA_NO_VALIDADO"
+              ]
+            ]
+          }
+        },
+        "type": "object",
+        "required": [
+          "vacuna",
+          "ultima_aplicacion",
+          "estado",
+          "proxima_aplicacion",
+          "es_refuerzo",
+          "motivos"
+        ],
+        "title": "SeguimientoOut"
+      },
+      "ServicioOut": {
+        "properties": {
+          "servicio_id": {
+            "type": "string",
+            "title": "Servicio Id"
+          },
+          "descripcion": {
+            "type": "string",
+            "title": "Descripcion"
+          },
+          "precio_mxn": {
+            "type": "string",
+            "title": "Precio Mxn",
+            "description": "Pesos mexicanos, como texto.",
+            "examples": [
+              "313.00"
+            ]
+          },
+          "capacidad": {
+            "type": "integer",
+            "title": "Capacidad"
+          },
+          "habilitado": {
+            "type": "boolean",
+            "title": "Habilitado"
+          }
+        },
+        "type": "object",
+        "required": [
+          "servicio_id",
+          "descripcion",
+          "precio_mxn",
+          "capacidad",
+          "habilitado"
+        ],
+        "title": "ServicioOut"
+      },
+      "VacunacionIn": {
+        "properties": {
+          "vacuna": {
+            "type": "string",
+            "title": "Vacuna",
+            "examples": [
+              "VAC-ANUAL"
+            ]
+          },
+          "fecha_aplicacion": {
+            "type": "string",
+            "format": "date",
+            "title": "Fecha Aplicacion",
+            "description": "Cuándo se aplicó (AAAA-MM-DD)."
+          },
+          "lote": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Lote"
+          },
+          "vacunacion_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Vacunacion Id",
+            "description": "Opcional; si no se indica, el sistema lo genera."
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "vacuna",
+          "fecha_aplicacion"
+        ],
+        "title": "VacunacionIn"
+      },
+      "VacunacionOut": {
+        "properties": {
+          "vacunacion_id": {
+            "type": "string",
+            "title": "Vacunacion Id"
+          },
+          "mascota_id": {
+            "type": "string",
+            "title": "Mascota Id"
+          },
+          "vacuna": {
+            "type": "string",
+            "title": "Vacuna"
+          },
+          "fecha_aplicacion": {
+            "type": "string",
+            "format": "date",
+            "title": "Fecha Aplicacion"
+          },
+          "lote": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Lote"
+          }
+        },
+        "type": "object",
+        "required": [
+          "vacunacion_id",
+          "mascota_id",
+          "vacuna",
+          "fecha_aplicacion",
+          "lote"
+        ],
+        "title": "VacunacionOut"
+      },
+      "VacunacionRegistradaOut": {
+        "properties": {
+          "vacunacion": {
+            "$ref": "#/components/schemas/VacunacionOut"
+          },
+          "seguimiento": {
+            "$ref": "#/components/schemas/SeguimientoOut"
+          }
+        },
+        "type": "object",
+        "required": [
+          "vacunacion",
+          "seguimiento"
+        ],
+        "title": "VacunacionRegistradaOut"
+      }
+    }
+  }
+}
