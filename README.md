@@ -1,93 +1,86 @@
-# VetCare 24 — PIA Componentes de Lógica de Negocio (Equipo 4)
+# Unidad 5 · Integración, Pruebas y Calidad
 
-Estado: **Etapa 10 — Emergencias (CU-05)**: registro sin cita, protocolo, notificación al veterinario y atención del personal clínico, por dominio, base de datos y API. Ver `docs/decisiones.md` (sección N) y la guía `docs/guia_etapa10.md`.
+**Curso:** Componentes de Lógica de Negocios · **Profesor:** Miguel Ángel Gómez Marroquín · **Fecha:** 05/11/2026
+
+**Equipo 4:** García Cerda Randal Guillermo (2112493) · Sarmiento Hernández Cesar Martín (2119427) · Torres Pasillas Angela Susana (2101844)
+
+Este repositorio reúne la entrega final de la Unidad 5: el laboratorio guiado, el proyecto VetCare 24, las evidencias, el reporte de cobertura y la documentación.
 
 ## Estructura
+
 ```
-src/vetcare24/
-  domain/          reglas de negocio puras (sin FastAPI ni SQLAlchemy)
-  application/     casos de uso, comandos, consultas, control de acceso
-  infrastructure/  configuración, persistencia, importador de CSV
-  api/             FastAPI + OpenAPI
-tests/             pruebas
-data/alumno/       CSV del alumno (solo lectura)
-docs/              decisiones y, más adelante, matriz de trazabilidad
-docker/initdb/     crea la base vetcare24_test
+Unidad5-Integracion-Pruebas-Calidad-Equipo4/
+├── README.md
+├── .gitignore
+├── .github/workflows/ci.yml
+├── ejecutar_todas_las_pruebas.ps1
+├── 01_LABORATORIO_U5/
+│   ├── laboratorio_U5/        proyecto final (src, tests, pyproject, requirements)
+│   ├── TDD_RED_BASELINE/      copia en fase RED del ciclo TDD
+│   ├── datos/                 casos_de_prueba.csv, clientes_prueba.csv, pedidos_prueba.csv
+│   └── recursos/              instrucciones, proyecto base original, base SQLite de demostración
+├── 02_PIA_VETCARE24/          código, pruebas, Docker Compose y evidencia generada
+├── 03_EVIDENCIAS/
+│   ├── Laboratorio/           E1 a E8
+│   └── PIA_VetCare24/         etapas 1 a 10, E8 (CI, GitHub, protección de rama) y E9
+├── docs/
+│   ├── Reporte_Unidad_5.docx / .pdf
+│   ├── Laboratorio_Guiado_Unidad_5_Completado.docx
+│   ├── Bitacora/
+│   └── Matrices/
+└── Reporte_Cobertura/
+    ├── Laboratorio/           reporte HTML (abrir index.html)
+    └── VetCare24/             html/ (abrir index.html), coverage.xml y capturas
 ```
 
-## Ejecutar con Docker
-```bash
-cp .env.example .env
-docker compose up --build            # API en http://localhost:8000/docs
-docker compose --profile tests run --rm tests   # pruebas + cobertura
+## Resultados
+
+| Proyecto | Pruebas | Cobertura | Verificaciones |
+|---|---|---|---|
+| Laboratorio (guiado) | 20 | 100 % | Ruff, compileall y GitHub Actions |
+| Laboratorio (conjunto completo, con la prueba de los CSV) | 32 | 100 % | Ruff y pytest (Figura 88) |
+| VetCare 24 | 584 | 99 % (98.81 % con ramas) | Ruff, pytest con PostgreSQL, 120 casos, 20 transiciones, 20 escenarios y Docker |
+
+Nota: las 20 pruebas del laboratorio guiado dieron 100 % (`Reporte_Cobertura/Laboratorio`). Después se agregó `tests/test_order_csv.py` (12 casos tomados de `datos/`): el conjunto completo corre 32 pruebas con 100 % de cobertura (53 declaraciones), como muestra la Figura 88 de `03_EVIDENCIAS/Laboratorio/E7_Cobertura_y_Calidad`.
+
+## Cómo ejecutar
+
+### Todo de una vez
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\ejecutar_todas_las_pruebas.ps1
 ```
 
-## Ejecutar sin Docker
-```bash
-python -m venv .venv && source .venv/bin/activate   # Windows: .venv\Scripts\activate
-pip install -r requirements-dev.txt
-pytest
-ruff check .
+Corre el laboratorio (Ruff, pytest y cobertura) y VetCare 24 en Docker (requiere Docker Desktop abierto). Con `-SoloLaboratorio` o `-SoloVetCare` se corre solo una parte.
+
+### Laboratorio
+
+```powershell
+cd 01_LABORATORIO_U5\laboratorio_U5
+py -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install -r requirements.txt
+python -m pytest -v --cov=src --cov-report=html --cov-fail-under=80
+python -m ruff check src tests
 ```
 
-## Oráculo (Etapa 2)
-Genera los resultados esperados de los 120 casos y las 20 transiciones en `docs/evidencia/`:
-```bash
-docker compose --profile tests run --rm tests python -m tests.oraculo
+### VetCare 24
+
+```powershell
+cd 02_PIA_VETCARE24
+copy .env.example .env
+docker compose --profile tests build tests
+docker compose --profile tests run --rm tests
+docker compose up --build        # API en http://localhost:8000/docs
 ```
-Sin Docker (PowerShell): `$env:PYTHONPATH="src"; python -m tests.oraculo`
 
-## Evidencia de eventos (Etapa 6)
-```bash
-docker compose --profile tests run --rm tests python -m tests.evidencia_eventos
-```
-Sin Docker (PowerShell): `$env:PYTHONPATH="src"; python -m tests.evidencia_eventos`
+## Integración continua y protección de rama
 
-## Base de datos (Etapa 7)
-Cargar los CSV en la base de datos de la aplicación (crea el esquema si falta):
-```bash
-docker compose up -d db
-docker compose run --rm app python -m vetcare24.infrastructure.sembrado
-```
-Las pruebas de persistencia corren en SQLite y, dentro de Docker Compose, también en PostgreSQL.
+`.github/workflows/ci.yml` ejecuta el laboratorio (Python 3.11) y VetCare 24 (lint, pruebas con PostgreSQL y Docker). Los flujos solo corren desde la raíz del repositorio, por eso están aquí y no dentro de cada proyecto.
+La rama `main` de VetCare 24 se protegió con un conjunto de reglas (pull request y checks obligatorios); el detalle y las capturas están en `docs/Bitacora/Bitacora_E8_GitHub_Actions.md`.
 
-## API REST (Etapa 7)
-Con `docker compose up --build` la documentación interactiva queda en http://localhost:8000/docs.
-Cada solicitud indica el rol en el encabezado `X-Rol` (`recepcion`, `veterinario`, `personal_clinico`, `responsable`).
-```bash
-docker compose run --rm app python -m vetcare24.infrastructure.sembrado   # datos del paquete
-curl -H "X-Rol: recepcion" http://localhost:8000/servicios
-curl -H "X-Rol: recepcion" "http://localhost:8000/citas?estado=SOLICITADA"
-curl -X POST -H "X-Rol: recepcion" http://localhost:8000/citas/CITA-XXXX/confirmar
-```
-Códigos de error: 400 solicitud mal formada, 401 falta rol, 403 sin permiso, 404 no existe, 409 transición inválida o capacidad insuficiente, 422 regla de negocio no cumplida (ver K en `docs/decisiones.md`).
+## Notas
 
-
-## Evidencia de la API (Etapa 8)
-```bash
-docker compose --profile tests run --rm tests python -m tests.evidencia_api
-docker compose --profile tests run --rm tests python -m vetcare24.api.exportar_openapi docs/evidencia/openapi.json
-```
-Genera `docs/evidencia/api_casos.csv`, `api_transiciones.csv` y `openapi.json`.
-Las evaluaciones por HTTP: `GET /citas/{id}/evaluaciones/procesamiento` y `/beneficio`.
-
-## Vacunación (Etapa 9)
-Si tu base de desarrollo es de la versión anterior, reiníciala (la tabla de eventos cambió):
-```bash
-docker compose down -v
-docker compose up -d db
-docker compose run --rm app python -m vetcare24.infrastructure.sembrado
-```
-Endpoints: `POST/GET /mascotas/{id}/vacunaciones`, `GET /mascotas/{id}/vacunaciones/seguimiento`,
-`GET /vacunas/proximas`, `GET /esquemas-vacunacion`.
-
-## Emergencias (Etapa 10)
-No hace falta reiniciar la base: al arrancar, la aplicación crea la tabla `emergencias` que falte.
-Endpoints: `POST /emergencias` (Recepción), `POST /emergencias/{id}/iniciar-atencion` (personal clínico),
-`GET /emergencias`, `GET /emergencias/{id}`, `GET /mascotas/{id}/evaluaciones/atencion`, `GET /avisos-veterinario`.
-Evidencia (20 escenarios por HTTP):
-```bash
-docker compose --profile tests run --rm tests python -m tests.evidencia_emergencias
-```
-Sin Docker (PowerShell): `$env:PYTHONPATH="src"; python -m tests.evidencia_emergencias`
-
+- No se incluyen entornos virtuales, archivos `.env`, tokens ni credenciales.
+- Los datos de los CSV son ficticios.
+- Los documentos de las unidades 2 y 3 (BRD, ADR, diagramas) no están en este repositorio.
