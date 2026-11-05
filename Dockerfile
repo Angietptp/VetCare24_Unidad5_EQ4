@@ -19,4 +19,5 @@ COPY requirements-dev.txt .
 RUN pip install -r requirements-dev.txt
 COPY pyproject.toml ./
 COPY tests ./tests
+COPY docs/u5 ./docs/u5
 CMD ["pytest"]
